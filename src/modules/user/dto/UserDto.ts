@@ -7,6 +7,8 @@ import { AbstractDto } from '../../../common/dto/AbstractDto';
 import { UserEntity } from '../user.entity';
 
 export class UserDto extends AbstractDto {
+    // @ApiModelPropertyOptional()
+    // id: number;
     @ApiModelPropertyOptional()
     firstName: string;
 
@@ -30,6 +32,7 @@ export class UserDto extends AbstractDto {
 
     constructor(user: UserEntity) {
         super(user);
+        // this.id = user.id;
         this.firstName = user.firstName;
         this.lastName = user.lastName;
         this.role = user.role;

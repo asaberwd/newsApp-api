@@ -5,6 +5,9 @@ import { TagDto } from './dto/tag.dto';
 
 @Entity({ name: 'tags' })
 export class TagEntity extends AbstractEntity<TagDto> {
+    // @PrimaryGeneratedColumn()
+    // id: number;
+
     @Column({ nullable: true })
     name: string;
 

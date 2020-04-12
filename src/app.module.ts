@@ -4,6 +4,7 @@ import { MiddlewareConsumer, Module, NestModule } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 
 import { contextMiddleware } from './middlewares';
+import { CategoriesModule } from './modules/categories/categories.module';
 // import { AuthModule } from './modules/auth/auth.module';
 import { MathModule } from './modules/math/math.module';
 import { TagsModule } from './modules/tags/tags.module';
@@ -25,6 +26,7 @@ import { SharedModule } from './shared/shared.module';
         // SharedModule,
         // TypeOrmModule.forRoot(),
         TagsModule,
+        CategoriesModule,
     ],
 })
 export class AppModule implements NestModule {

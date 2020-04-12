@@ -1,4 +1,4 @@
-import { Entity, Column } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import { AbstractEntity } from '../../common/abstract.entity';
 import { RoleType } from '../../common/constants/role-type';
@@ -7,6 +7,9 @@ import { PasswordTransformer } from './password.transformer';
 
 @Entity({ name: 'users' })
 export class UserEntity extends AbstractEntity<UserDto> {
+    // @PrimaryGeneratedColumn('increment')
+    // id: number;
+
     @Column({ nullable: true })
     firstName: string;
 
