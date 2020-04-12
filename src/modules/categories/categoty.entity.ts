@@ -1,17 +1,17 @@
-import { Column, Entity, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity } from 'typeorm';
 
 import { AbstractEntity } from '../../common/abstract.entity';
 import { CategoryDto } from './dto/category.dto';
 
 @Entity({ name: 'categories' })
 export class CategoryEntity extends AbstractEntity<CategoryDto> {
-    @PrimaryGeneratedColumn()
-    id: number;
+    // @PrimaryGeneratedColumn()
+    // id: number;
 
-    @Column({ nullable: true })
+    @Column({ nullable: false })
     name: string;
 
-    @Column({ nullable: true, unique: true })
+    @Column({ nullable: false, unique: true })
     slug: string;
 
     @Column()

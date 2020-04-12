@@ -1,10 +1,10 @@
 import { Column, Entity } from 'typeorm';
 
 import { AbstractEntity } from '../../common/abstract.entity';
-import { TagDto } from './dto/tag.dto';
+import { SourceDto } from './dto/source.dto';
 
-@Entity({ name: 'tags' })
-export class TagEntity extends AbstractEntity<TagDto> {
+@Entity({ name: 'sources' })
+export class SourceEntity extends AbstractEntity<SourceDto> {
     // @PrimaryGeneratedColumn()
     // id: number;
 
@@ -14,5 +14,8 @@ export class TagEntity extends AbstractEntity<TagDto> {
     @Column({ nullable: false, unique: true })
     slug: string;
 
-    dtoClass = TagDto;
+    @Column({ nullable: false, unique: true })
+    url: string;
+
+    dtoClass = SourceDto;
 }
