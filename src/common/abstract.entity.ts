@@ -1,8 +1,8 @@
 'use strict';
 
 import {
-    PrimaryGeneratedColumn,
     CreateDateColumn,
+    PrimaryGeneratedColumn,
     UpdateDateColumn,
 } from 'typeorm';
 
@@ -10,8 +10,8 @@ import { UtilsService } from '../providers/utils.service';
 import { AbstractDto } from './dto/AbstractDto';
 
 export abstract class AbstractEntity<T extends AbstractDto = AbstractDto> {
-    @PrimaryGeneratedColumn('uuid')
-    id: string;
+    @PrimaryGeneratedColumn('increment')
+    id: number;
 
     @CreateDateColumn({
         type: 'timestamp without time zone',

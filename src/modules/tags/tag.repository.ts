@@ -19,18 +19,17 @@ export class TagRepository extends Repository<TagEntity> {
         return this.find();
     }
 
-    async getTag(id: string): Promise<TagEntity> {
-        try {
-            return await this.findOne(id);
-        } catch (error) {
-            if (error.code === '22P02') {
-                throw new NotFoundException('this id is not valid');
-            }
+    async getTag(id: number): Promise<TagEntity> {
+        const tag = await this.findOne(id);
+        if (!tag) {
+            throw new NotFoundException('there is no tag with this id');
         }
+        return tag;
     }
 
-    async deleteTag(id: string): Promise<void> {
+    async deleteTag(id: number): Promise<void> {
         const tag = await this.getTag(id);
-        await this.delete(tag);
+        await this.delete({ id: tag.id });
+        // tag.delete()
     }
 }

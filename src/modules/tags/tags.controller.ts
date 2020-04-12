@@ -1,4 +1,12 @@
-import { Body, Controller, Delete, Get, Param, Post } from '@nestjs/common';
+import {
+    Body,
+    Controller,
+    Delete,
+    Get,
+    Param,
+    ParseIntPipe,
+    Post,
+} from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { CreateTagDto } from './dto/create-tag.dto';
@@ -26,14 +34,14 @@ export class TagsController {
 
     @Get('/:id')
     @ApiOkResponse({ type: TagDto, description: 'get specific tag with id' })
-    async getTag(@Param('id') id: string): Promise<TagDto> {
+    async getTag(@Param('id', ParseIntPipe) id: number): Promise<TagDto> {
         const tag = await this._tagService.getTag(id);
         return tag.toDto();
     }
 
     @Delete('/:id')
     @ApiOkResponse({ description: 'delete specific tag with id' })
-    async deleteTag(@Param('id') id: string): Promise<void> {
+    async deleteTag(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return this._tagService.deleteTag(id);
     }
 }

@@ -19,11 +19,11 @@ export class TagsService {
         return this._tagRepository.getTags();
     }
 
-    getTag(id: string): Promise<TagEntity> {
+    getTag(id: number): Promise<TagEntity> {
         return this._tagRepository.getTag(id);
     }
 
-    deleteTag(id: string): Promise<void> {
+    deleteTag(id: number): Promise<void> {
         return this._tagRepository.deleteTag(id);
     }
 }
