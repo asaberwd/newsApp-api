@@ -1,26 +1,26 @@
 'use strict';
 
-import { ApiModelPropertyOptional } from '@nestjs/swagger';
+import { ApiModelProperty } from '@nestjs/swagger';
 
 import { AbstractDto } from '../../../common/dto/AbstractDto';
 import { CategoryEntity } from '../categoty.entity';
 
 export class CategoryDto extends AbstractDto {
-    // @ApiModelPropertyOptional()
-    // id: number;
+    @ApiModelProperty()
+    id: number;
 
-    @ApiModelPropertyOptional()
+    @ApiModelProperty()
     name: string;
 
-    @ApiModelPropertyOptional()
+    @ApiModelProperty()
     slug: string;
 
-    @ApiModelPropertyOptional()
+    @ApiModelProperty()
     description: string;
 
     constructor(category: CategoryEntity) {
         super(category);
-        // this.id = category.id;
+        this.id = category.id;
         this.name = category.name;
         this.slug = category.slug;
         this.description = category.description;

@@ -7,6 +7,7 @@ import { contextMiddleware } from './middlewares';
 import { CategoriesModule } from './modules/categories/categories.module';
 // import { AuthModule } from './modules/auth/auth.module';
 import { MathModule } from './modules/math/math.module';
+import { PostsModule } from './modules/posts/posts.module';
 import { SourcesModule } from './modules/sources/sources.module';
 import { TagsModule } from './modules/tags/tags.module';
 // import { UserModule } from './modules/user/user.module';
@@ -29,6 +30,7 @@ import { SharedModule } from './shared/shared.module';
         TagsModule,
         CategoriesModule,
         SourcesModule,
+        PostsModule,
     ],
 })
 export class AppModule implements NestModule {

@@ -31,6 +31,23 @@ export class TagsController {
         const tags = await this._tagService.getTags();
         return tags.toDtos();
     }
+    // @Get('/names')
+    // // @ApiOkResponse({ type: [TagDto], description: 'get all tags' })
+    // async getTagsByNames(): Promise<any> {
+    //     const tags = await this._tagService.insertManyTags([
+    //         'tag4',
+    //         'tag5',
+    //         'tag6',
+    //     ]);
+    //     return tags;
+    // }
+
+    // @Get('/id/get')
+    // @ApiOkResponse({ type: [TagDto], description: 'get all tags' })
+    // async getTagsByIds(): Promise<TagDto[]> {
+    //     const tags = await this._tagService.getTagsById([1, 2]);
+    //     return tags.toDtos();
+    // }
 
     @Get('/:id')
     @ApiOkResponse({ type: TagDto, description: 'get specific tag with id' })

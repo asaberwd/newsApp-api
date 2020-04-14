@@ -2,7 +2,7 @@ import { TypeOrmModuleOptions } from '@nestjs/typeorm';
 import * as dotenv from 'dotenv';
 
 import { IAwsConfig } from '../../interfaces/IAwsConfig';
-import { SnakeNamingStrategy } from '../../snake-naming.strategy';
+// import { SnakeNamingStrategy } from '../../snake-naming.strategy';
 
 export class ConfigService {
     constructor() {
@@ -69,7 +69,7 @@ export class ConfigService {
             database: this.get('POSTGRES_DATABASE'),
             // migrationsRun: true,
             logging: this.nodeEnv === 'development',
-            namingStrategy: new SnakeNamingStrategy(),
+            // namingStrategy: new SnakeNamingStrategy(),
             synchronize: true,
         };
     }

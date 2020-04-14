@@ -26,4 +26,16 @@ export class TagsService {
     deleteTag(id: number): Promise<void> {
         return this._tagRepository.deleteTag(id);
     }
+
+    getTagsById(idList: number[]): Promise<TagEntity[]> {
+        return this._tagRepository.getTagsById(idList);
+    }
+
+    findTagsByName(names: string[]): Promise<TagEntity[]> {
+        return this._tagRepository.findTagsByName(names);
+    }
+
+    insertManyTags(names: string[]): Promise<TagEntity[]> {
+        return this._tagRepository.insertManyTags(names);
+    }
 }
