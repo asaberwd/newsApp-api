@@ -6,11 +6,13 @@ import {
     Param,
     ParseIntPipe,
     Post,
+    Put,
 } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { CreateSourceDto } from './dto/create-source.dto';
 import { SourceDto } from './dto/source.dto';
+import { UpdateSourceDto } from './dto/update-source.dto';
 import { SourcesService } from './sources.service';
 
 @Controller('sources')
@@ -43,6 +45,18 @@ export class SourcesController {
     async getSource(@Param('id', ParseIntPipe) id: number): Promise<SourceDto> {
         const source = await this._sourceService.getSource(id);
         return source.toDto();
+    }
+
+    @Put('/:id')
+    @ApiOkResponse({
+        type: SourceDto,
+        description: 'update specific source with id',
+    })
+    async updateSource(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() updateSourceDto: UpdateSourceDto,
+    ): Promise<SourceDto> {
+        return this._sourceService.updateSource(id, updateSourceDto);
     }
 
     @Delete('/:id')

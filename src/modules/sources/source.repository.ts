@@ -3,6 +3,7 @@ import { Repository } from 'typeorm';
 import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 
 import { CreateSourceDto } from './dto/create-source.dto';
+import { UpdateSourceDto } from './dto/update-source.dto';
 import { SourceEntity } from './source.entity';
 
 @EntityRepository(SourceEntity)
@@ -25,5 +26,13 @@ export class SourceRepository extends Repository<SourceEntity> {
     async deleteSource(id: number): Promise<void> {
         const source = await this.getSource(id);
         await this.delete({ id: source.id });
+    }
+
+    async updateSource(
+        id: number,
+        updateSourceDto: UpdateSourceDto,
+    ): Promise<SourceEntity> {
+        const source = await this.getSource(id);
+        return this.save({ ...source, ...updateSourceDto });
     }
 }

@@ -2,6 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 
 import { CreateSourceDto } from './dto/create-source.dto';
+import { UpdateSourceDto } from './dto/update-source.dto';
 import { SourceEntity } from './source.entity';
 import { SourceRepository } from './source.repository';
 
@@ -26,5 +27,12 @@ export class SourcesService {
 
     deleteSource(id: number): Promise<void> {
         return this._sourceRepository.deleteSource(id);
+    }
+
+    updateSource(
+        id: number,
+        updateSourceDto: UpdateSourceDto,
+    ): Promise<SourceEntity> {
+        return this._sourceRepository.updateSource(id, updateSourceDto);
     }
 }
