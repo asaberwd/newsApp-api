@@ -4,6 +4,7 @@ import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 
 import { TagEntity } from '../tags/tag.entity';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './post.entity';
 
 @EntityRepository(PostEntity)
@@ -29,7 +30,7 @@ export class PostRepository extends Repository<PostEntity> {
         return this.find({ relations: ['tags'] });
     }
 
-    async getPostById(id: number): Promise<PostEntity> {
+    async getPostById(id: string): Promise<PostEntity> {
         const post = this.findOne(id, { relations: ['tags'] });
         if (!post) {
             throw new NotFoundException('there is no post with this id');
@@ -37,6 +38,14 @@ export class PostRepository extends Repository<PostEntity> {
         {
             return post;
         }
+    }
+
+    async updatePost(
+        id: string,
+        updatePostDto: UpdatePostDto,
+    ): Promise<PostEntity> {
+        const post = await this.getPostById(id);
+        return this.save({ ...post, ...updatePostDto });
     }
 
     // async deleteSource(id: number): Promise<void> {

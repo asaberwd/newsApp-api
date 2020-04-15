@@ -4,6 +4,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { TagEntity } from '../tags/tag.entity';
 import { TagsService } from '../tags/tags.service';
 import { CreatePostDto } from './dto/create-post.dto';
+import { UpdatePostDto } from './dto/update-post.dto';
 import { PostEntity } from './post.entity';
 import { PostRepository } from './post.repository';
 
@@ -44,7 +45,11 @@ export class PostsService {
         return this._postRepository.getPosts();
     }
 
-    getPost(id: number): Promise<PostEntity> {
+    getPost(id: string): Promise<PostEntity> {
         return this._postRepository.getPostById(id);
+    }
+
+    updatePost(id: string, updatePostDto: UpdatePostDto): Promise<PostEntity> {
+        return this._postRepository.updatePost(id, updatePostDto);
     }
 }
