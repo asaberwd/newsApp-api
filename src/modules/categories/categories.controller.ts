@@ -6,12 +6,14 @@ import {
     Param,
     ParseIntPipe,
     Post,
+    Put,
 } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { CategoriesService } from './categories.service';
 import { CategoryDto } from './dto/category.dto';
 import { CreateCategoryDto } from './dto/create-category.dto';
+import { UpdateCategoryDto } from './dto/update-category.dto';
 
 @Controller('categories')
 export class CategoriesController {
@@ -30,7 +32,7 @@ export class CategoriesController {
 
     @Get('')
     @ApiOkResponse({ type: [CategoryDto], description: 'get all categories' })
-    async getTags(): Promise<CategoryDto[]> {
+    async getCategories(): Promise<CategoryDto[]> {
         const categories = await this._categoryService.getCategories();
         return categories.toDtos();
     }
@@ -40,9 +42,23 @@ export class CategoriesController {
         type: CategoryDto,
         description: 'get specific category with id',
     })
-    async getTag(@Param('id', ParseIntPipe) id: number): Promise<CategoryDto> {
+    async getCategory(
+        @Param('id', ParseIntPipe) id: number,
+    ): Promise<CategoryDto> {
         const category = await this._categoryService.getCategory(id);
         return category.toDto();
+    }
+
+    @Put('/:id')
+    @ApiOkResponse({
+        type: CategoryDto,
+        description: 'update specific category with id',
+    })
+    async updateCategory(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() updateCategoryDto: UpdateCategoryDto,
+    ): Promise<CategoryDto> {
+        return this._categoryService.updateCategory(id, updateCategoryDto);
     }
 
     @Delete('/:id')

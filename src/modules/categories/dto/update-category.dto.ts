@@ -3,7 +3,7 @@
 import { ApiModelPropertyOptional } from '@nestjs/swagger';
 import { IsNotEmpty, IsOptional, IsString } from 'class-validator';
 
-export class UpdateTagDto {
+export class UpdateCategoryDto {
     @IsOptional()
     @IsString()
     @IsNotEmpty()
@@ -15,4 +15,9 @@ export class UpdateTagDto {
     @IsNotEmpty()
     @ApiModelPropertyOptional()
     readonly slug: string;
+
+    @IsString()
+    @IsOptional()
+    @ApiModelPropertyOptional()
+    readonly description: string;
 }
