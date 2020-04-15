@@ -6,11 +6,13 @@ import {
     Param,
     ParseIntPipe,
     Post,
+    Put,
 } from '@nestjs/common';
 import { ApiOkResponse } from '@nestjs/swagger';
 
 import { CreateTagDto } from './dto/create-tag.dto';
 import { TagDto } from './dto/tag.dto';
+import { UpdateTagDto } from './dto/update-tag.dto';
 import { TagsService } from './tags.service';
 
 @Controller('tags')
@@ -31,29 +33,21 @@ export class TagsController {
         const tags = await this._tagService.getTags();
         return tags.toDtos();
     }
-    // @Get('/names')
-    // // @ApiOkResponse({ type: [TagDto], description: 'get all tags' })
-    // async getTagsByNames(): Promise<any> {
-    //     const tags = await this._tagService.insertManyTags([
-    //         'tag4',
-    //         'tag5',
-    //         'tag6',
-    //     ]);
-    //     return tags;
-    // }
-
-    // @Get('/id/get')
-    // @ApiOkResponse({ type: [TagDto], description: 'get all tags' })
-    // async getTagsByIds(): Promise<TagDto[]> {
-    //     const tags = await this._tagService.getTagsById([1, 2]);
-    //     return tags.toDtos();
-    // }
 
     @Get('/:id')
     @ApiOkResponse({ type: TagDto, description: 'get specific tag with id' })
     async getTag(@Param('id', ParseIntPipe) id: number): Promise<TagDto> {
         const tag = await this._tagService.getTag(id);
         return tag.toDto();
+    }
+
+    @Put('/:id')
+    @ApiOkResponse({ type: TagDto, description: 'update specific tag with id' })
+    updateTag(
+        @Param('id', ParseIntPipe) id: number,
+        @Body() updateTagDto: UpdateTagDto,
+    ): Promise<TagDto> {
+        return this._tagService.updateTag(id, updateTagDto);
     }
 
     @Delete('/:id')

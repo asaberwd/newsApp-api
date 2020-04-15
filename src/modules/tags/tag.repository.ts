@@ -4,6 +4,7 @@ import { EntityRepository } from 'typeorm/decorator/EntityRepository';
 
 import { CreateTagDto } from './dto/create-tag.dto';
 import { TagDto } from './dto/tag.dto';
+import { UpdateTagDto } from './dto/update-tag.dto';
 import { TagEntity } from './tag.entity';
 
 @EntityRepository(TagEntity)
@@ -36,6 +37,14 @@ export class TagRepository extends Repository<TagEntity> {
 
     async getTagsById(idList: number[]): Promise<TagEntity[]> {
         return this.findByIds(idList);
+    }
+
+    async updateTag(
+        id: number,
+        updateTagDto: UpdateTagDto,
+    ): Promise<TagEntity> {
+        const tag = await this.getTag(id);
+        return this.save({ ...tag, ...updateTagDto });
     }
 
     findTagsByName(tagsNames: string[]): Promise<TagEntity[]> {
