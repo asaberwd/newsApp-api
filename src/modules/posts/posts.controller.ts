@@ -1,6 +1,18 @@
-import { Body, Controller, Get, Param, Post, Put } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import {
+    Body,
+    Controller,
+    Get,
+    Param,
+    Post,
+    Put,
+    UseGuards,
+} from '@nestjs/common';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 
+import { RoleType } from '../../common/constants/role-type';
+import { Roles } from '../../decorators/roles.decorator';
+import { AuthGuard } from '../../guards/auth.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 import { CreatePostDto } from './dto/create-post.dto';
 import { PostDto } from './dto/post.dto';
 import { UpdatePostDto } from './dto/update-post.dto';
@@ -11,10 +23,12 @@ export class PostsController {
     constructor(private _postsService: PostsService) {}
 
     @Post('')
+    @UseGuards(AuthGuard)
     @ApiOkResponse({
         type: PostDto,
         description: 'post is added successfully',
     })
+    @ApiBearerAuth()
     async createPost(@Body() createPost: CreatePostDto): Promise<PostDto> {
         const post = await this._postsService.createPost(createPost);
         return post.toDto();
@@ -37,6 +51,8 @@ export class PostsController {
     }
 
     @Put('/:id')
+    @UseGuards(AuthGuard, RolesGuard)
+    @Roles(RoleType.ADMIN, RoleType.SUPER_ADMIN)
     @ApiOkResponse({ type: PostDto, description: 'update specific post by id' })
     updatePost(
         @Param('id') id: string,

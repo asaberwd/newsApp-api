@@ -10,26 +10,17 @@ export class UserEntity extends AbstractEntity<UserDto> {
     @PrimaryGeneratedColumn()
     id: number;
 
-    @Column({ nullable: true })
-    firstName: string;
+    @Column({ nullable: false })
+    name: string;
 
-    @Column({ nullable: true })
-    lastName: string;
-
-    @Column({ type: 'enum', enum: RoleType, default: RoleType.USER })
+    @Column({ type: 'enum', enum: RoleType, default: RoleType.WRITER })
     role: RoleType;
 
-    @Column({ unique: true, nullable: true })
+    @Column({ unique: true, nullable: false })
     email: string;
 
     @Column({ nullable: true, transformer: new PasswordTransformer() })
     password: string;
-
-    @Column({ nullable: true })
-    phone: string;
-
-    @Column({ nullable: true })
-    avatar: string;
 
     dtoClass = UserDto;
 }

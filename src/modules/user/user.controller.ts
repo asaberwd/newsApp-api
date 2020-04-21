@@ -18,8 +18,8 @@ import { Roles } from '../../decorators/roles.decorator';
 import { AuthGuard } from '../../guards/auth.guard';
 import { RolesGuard } from '../../guards/roles.guard';
 import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.service';
-import { UsersPageOptionsDto } from './dto/UsersPageOptionsDto';
 import { UsersPageDto } from './dto/UsersPageDto';
+import { UsersPageOptionsDto } from './dto/UsersPageOptionsDto';
 import { UserEntity } from './user.entity';
 import { UserService } from './user.service';
 
@@ -35,7 +35,7 @@ export class UserController {
     @Roles(RoleType.USER)
     @HttpCode(HttpStatus.OK)
     async admin(@AuthUser() user: UserEntity) {
-        return 'only for you admin: ' + user.firstName;
+        return 'only for you admin: ' + user.name;
     }
 
     @Get('users')

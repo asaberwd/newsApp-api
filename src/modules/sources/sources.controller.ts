@@ -7,9 +7,14 @@ import {
     ParseIntPipe,
     Post,
     Put,
+    UseGuards,
 } from '@nestjs/common';
-import { ApiOkResponse } from '@nestjs/swagger';
+import { ApiBearerAuth, ApiOkResponse } from '@nestjs/swagger';
 
+import { RoleType } from '../../common/constants/role-type';
+import { Roles } from '../../decorators/roles.decorator';
+import { AuthGuard } from '../../guards/auth.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 import { CreateSourceDto } from './dto/create-source.dto';
 import { SourceDto } from './dto/source.dto';
 import { UpdateSourceDto } from './dto/update-source.dto';
@@ -20,10 +25,12 @@ export class SourcesController {
     constructor(private _sourceService: SourcesService) {}
 
     @Post('')
+    @UseGuards(AuthGuard)
     @ApiOkResponse({
         type: SourceDto,
         description: 'source is added successfully',
     })
+    @ApiBearerAuth()
     async createSource(@Body() createSource: CreateSourceDto) {
         const source = await this._sourceService.createSource(createSource);
 
@@ -48,10 +55,13 @@ export class SourcesController {
     }
 
     @Put('/:id')
+    @UseGuards(AuthGuard, RolesGuard)
+    @Roles(RoleType.ADMIN, RoleType.SUPER_ADMIN)
     @ApiOkResponse({
         type: SourceDto,
         description: 'update specific source with id',
     })
+    @ApiBearerAuth()
     async updateSource(
         @Param('id', ParseIntPipe) id: number,
         @Body() updateSourceDto: UpdateSourceDto,
@@ -60,7 +70,9 @@ export class SourcesController {
     }
 
     @Delete('/:id')
+    @UseGuards(AuthGuard)
     @ApiOkResponse({ description: 'delete specific source with id' })
+    @ApiBearerAuth()
     async deleteSource(@Param('id', ParseIntPipe) id: number): Promise<void> {
         return this._sourceService.deleteSource(id);
     }

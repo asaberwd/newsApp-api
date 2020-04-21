@@ -10,13 +10,7 @@ export class UserDto extends AbstractDto {
     @ApiModelProperty()
     id: number;
     @ApiModelProperty()
-    firstName: string;
-
-    @ApiModelProperty()
-    lastName: string;
-
-    @ApiModelProperty()
-    username: string;
+    name: string;
 
     @ApiModelProperty({ enum: RoleType })
     role: RoleType;
@@ -25,19 +19,14 @@ export class UserDto extends AbstractDto {
     email: string;
 
     @ApiModelProperty()
-    avatar: string;
-
-    @ApiModelProperty()
     phone: string;
 
     constructor(user: UserEntity) {
         super(user);
         this.id = user.id;
-        this.firstName = user.firstName;
-        this.lastName = user.lastName;
+        this.name = user.name;
+
         this.role = user.role;
         this.email = user.email;
-        this.avatar = user.avatar;
-        this.phone = user.phone;
     }
 }
