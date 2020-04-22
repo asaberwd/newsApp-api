@@ -1,15 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { FindConditions } from 'typeorm';
-import { UserEntity } from './user.entity';
-import { UserRegisterDto } from '../auth/dto/UserRegisterDto';
-import { UserRepository } from './user.repository';
-import { IFile } from '../../interfaces/IFile';
-import { ValidatorService } from '../../shared/services/validator.service';
-import { FileNotImageException } from '../../exceptions/file-not-image.exception';
-import { AwsS3Service } from '../../shared/services/aws-s3.service';
-import { UsersPageOptionsDto } from './dto/UsersPageOptionsDto';
+
+import { RoleType } from '../../common/constants/role-type';
 import { PageMetaDto } from '../../common/dto/PageMetaDto';
+// import { FileNotImageException } from '../../exceptions/file-not-image.exception';
+import { AwsS3Service } from '../../shared/services/aws-s3.service';
+// import { IFile } from '../../interfaces/IFile';
+import { ValidatorService } from '../../shared/services/validator.service';
+import { UserRegisterDto } from '../auth/dto/UserRegisterDto';
 import { UsersPageDto } from './dto/UsersPageDto';
+import { UsersPageOptionsDto } from './dto/UsersPageOptionsDto';
+import { UserEntity } from './user.entity';
+import { UserRepository } from './user.repository';
 
 @Injectable()
 export class UserService {
@@ -26,7 +28,7 @@ export class UserService {
         return this.userRepository.findOne(findData);
     }
     async findByUsernameOrEmail(
-        options: Partial<{ username: string; email: string }>,
+        options: Partial<{ name: string; email: string }>,
     ): Promise<UserEntity | undefined> {
         const queryBuilder = this.userRepository.createQueryBuilder('user');
 
@@ -35,29 +37,37 @@ export class UserService {
                 email: options.email,
             });
         }
-        if (options.username) {
+        if (options.name) {
             queryBuilder.orWhere('user.username = :username', {
-                username: options.username,
+                username: options.name,
             });
         }
 
         return queryBuilder.getOne();
     }
 
-    async createUser(
-        userRegisterDto: UserRegisterDto,
-        file: IFile,
-    ): Promise<UserEntity> {
-        let avatar: string;
-        if (file && !this.validatorService.isImage(file.mimetype)) {
-            throw new FileNotImageException();
-        }
+    async createUser({
+        name,
+        email,
+        password,
+        role,
+    }: UserRegisterDto): // file: IFile,
+    Promise<UserEntity> {
+        // let avatar: string;
+        // if (file && !this.validatorService.isImage(file.mimetype)) {
+        //     throw new FileNotImageException();
+        // }
 
-        if (file) {
-            avatar = await this.awsS3Service.uploadImage(file);
-        }
+        // if (file) {
+        //     avatar = await this.awsS3Service.uploadImage(file);
+        // }
 
-        const user = this.userRepository.create({ ...userRegisterDto, avatar });
+        const user = this.userRepository.create({
+            name,
+            email,
+            password,
+            role: RoleType[role],
+        });
 
         return this.userRepository.save(user);
     }

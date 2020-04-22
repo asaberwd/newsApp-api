@@ -1,26 +1,14 @@
 'use strict';
 
-import {
-    IsString,
-    IsEmail,
-    MinLength,
-    IsNotEmpty,
-    IsPhoneNumber,
-    IsOptional,
-} from 'class-validator';
 import { ApiModelProperty } from '@nestjs/swagger';
-import { Column } from 'typeorm';
+import { RoleType } from 'aws-sdk/clients/cognitoidentity';
+import { IsEmail, IsNotEmpty, IsString, MinLength } from 'class-validator';
 
 export class UserRegisterDto {
     @IsString()
     @IsNotEmpty()
     @ApiModelProperty()
-    readonly firstName: string;
-
-    @IsString()
-    @IsNotEmpty()
-    @ApiModelProperty()
-    readonly lastName: string;
+    readonly name: string;
 
     @IsString()
     @IsEmail()
@@ -33,9 +21,7 @@ export class UserRegisterDto {
     @ApiModelProperty({ minLength: 6 })
     readonly password: string;
 
-    @Column()
-    @IsPhoneNumber('ZZ')
-    @IsOptional()
+    @IsString()
     @ApiModelProperty()
-    phone: string;
+    readonly role: RoleType;
 }

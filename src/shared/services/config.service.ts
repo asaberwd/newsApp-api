@@ -1,8 +1,8 @@
-import * as dotenv from 'dotenv';
 import { TypeOrmModuleOptions } from '@nestjs/typeorm';
+import * as dotenv from 'dotenv';
 
 import { IAwsConfig } from '../../interfaces/IAwsConfig';
-import { SnakeNamingStrategy } from '../../snake-naming.strategy';
+// import { SnakeNamingStrategy } from '../../snake-naming.strategy';
 
 export class ConfigService {
     constructor() {
@@ -33,7 +33,7 @@ export class ConfigService {
 
     get typeOrmConfig(): TypeOrmModuleOptions {
         let entities = [__dirname + '/../../modules/**/*.entity{.ts,.js}'];
-        let migrations = [__dirname + '/../../migrations/*{.ts,.js}'];
+        // let migrations = [__dirname + '/../../migrations/*{.ts,.js}'];
 
         if ((<any>module).hot) {
             const entityContext = (<any>require).context(
@@ -46,20 +46,20 @@ export class ConfigService {
                 const [entity] = Object.values(entityModule);
                 return entity;
             });
-            const migrationContext = (<any>require).context(
-                './../../migrations',
-                false,
-                /\.ts$/,
-            );
-            migrations = migrationContext.keys().map(id => {
-                const migrationModule = migrationContext(id);
-                const [migration] = Object.values(migrationModule);
-                return migration;
-            });
+            // const migrationContext = (<any>require).context(
+            //     './../../migrations',
+            //     false,
+            //     /\.ts$/,
+            // );
+            // migrations = migrationContext.keys().map(id => {
+            //     const migrationModule = migrationContext(id);
+            //     const [migration] = Object.values(migrationModule);
+            //     return migration;
+            // });
         }
         return {
             entities,
-            migrations,
+            // migrations,
             keepConnectionAlive: true,
             type: 'postgres',
             host: this.get('POSTGRES_HOST'),
@@ -67,9 +67,10 @@ export class ConfigService {
             username: this.get('POSTGRES_USERNAME'),
             password: this.get('POSTGRES_PASSWORD'),
             database: this.get('POSTGRES_DATABASE'),
-            migrationsRun: true,
+            // migrationsRun: true,
             logging: this.nodeEnv === 'development',
-            namingStrategy: new SnakeNamingStrategy(),
+            // namingStrategy: new SnakeNamingStrategy(),
+            synchronize: true,
         };
     }
 

@@ -1,26 +1,29 @@
 import {
-    Controller,
-    Post,
     Body,
+    Controller,
+    Get,
     HttpCode,
     HttpStatus,
-    Get,
-    UseInterceptors,
+    Post,
     UseGuards,
-    UploadedFile,
+    UseInterceptors,
+    // UploadedFile,
 } from '@nestjs/common';
-import { FileInterceptor } from '@nestjs/platform-express';
+// import { FileInterceptor } from '@nestjs/platform-express';
 import {
+    ApiBearerAuth,
     ApiOkResponse,
     ApiUseTags,
-    ApiBearerAuth,
-    ApiImplicitFile,
+    // ApiImplicitFile,
 } from '@nestjs/swagger';
 
+import { RoleType } from '../../common/constants/role-type';
 import { AuthUser } from '../../decorators/auth-user.decorator';
+import { Roles } from '../../decorators/roles.decorator';
 import { AuthGuard } from '../../guards/auth.guard';
+import { RolesGuard } from '../../guards/roles.guard';
 import { AuthUserInterceptor } from '../../interceptors/auth-user-interceptor.service';
-import { IFile } from '../../interfaces/IFile';
+// import { IFile } from '../../interfaces/IFile';
 import { UserDto } from '../user/dto/UserDto';
 import { UserEntity } from '../user/user.entity';
 import { UserService } from '../user/user.service';
@@ -37,7 +40,7 @@ export class AuthController {
         public readonly authService: AuthService,
     ) {}
 
-    @Post('login')
+    @Post('/login')
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({
         type: LoginPayloadDto,
@@ -52,18 +55,21 @@ export class AuthController {
         return new LoginPayloadDto(userEntity.toDto(), token);
     }
 
-    @Post('register')
+    @Post('/register')
+    @UseGuards(AuthGuard, RolesGuard)
+    @Roles(RoleType.ADMIN)
     @HttpCode(HttpStatus.OK)
     @ApiOkResponse({ type: UserDto, description: 'Successfully Registered' })
-    @ApiImplicitFile({ name: 'avatar', required: true })
-    @UseInterceptors(FileInterceptor('avatar'))
+    @ApiBearerAuth()
+    // @ApiImplicitFile({ name: 'avatar', required: true })
+    // @UseInterceptors(FileInterceptor('avatar'))
     async userRegister(
         @Body() userRegisterDto: UserRegisterDto,
-        @UploadedFile() file: IFile,
+        // @UploadedFile() file: IFile,
     ): Promise<UserDto> {
         const createdUser = await this.userService.createUser(
             userRegisterDto,
-            file,
+            // file,
         );
 
         return createdUser.toDto();
