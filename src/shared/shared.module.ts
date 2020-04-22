@@ -1,6 +1,7 @@
-import { Module, Global, HttpModule } from '@nestjs/common';
+import { Global, HttpModule, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
+import { TasksService } from './scrapper/cron.service';
 import { AwsS3Service } from './services/aws-s3.service';
 import { ConfigService } from './services/config.service';
 import { GeneratorService } from './services/generator.service';
@@ -11,6 +12,7 @@ const providers = [
     ValidatorService,
     AwsS3Service,
     GeneratorService,
+    TasksService,
 ];
 
 @Global()
