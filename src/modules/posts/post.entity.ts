@@ -5,6 +5,7 @@ import {
     ManyToMany,
     ManyToOne,
     PrimaryGeneratedColumn,
+    Unique,
 } from 'typeorm';
 
 import { AbstractEntity } from '../../common/abstract.entity';
@@ -14,6 +15,7 @@ import { TagEntity } from '../tags/tag.entity';
 import { PostDto } from './dto/post.dto';
 
 @Entity({ name: 'posts' })
+@Unique(['title', 'categoryId'])
 export class PostEntity extends AbstractEntity<PostDto> {
     @PrimaryGeneratedColumn('uuid')
     id: string;

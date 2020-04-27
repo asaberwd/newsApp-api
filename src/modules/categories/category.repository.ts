@@ -22,6 +22,10 @@ export class CategoryRepository extends Repository<CategoryEntity> {
         return this.find();
     }
 
+    async getCategoryByName(categoryName: string): Promise<CategoryEntity> {
+        return this.findOne({ name: categoryName });
+    }
+
     async getCategory(id: number): Promise<CategoryEntity> {
         const category = await this.findOne(id);
         if (!category) {

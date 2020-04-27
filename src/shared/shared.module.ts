@@ -1,11 +1,14 @@
 import { Global, HttpModule, Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
 
+import { CategoriesModule } from '../modules/categories/categories.module';
+import { PostsModule } from '../modules/posts/posts.module';
 import { TasksService } from './scrapper/cron.service';
 import { AwsS3Service } from './services/aws-s3.service';
 import { ConfigService } from './services/config.service';
 import { GeneratorService } from './services/generator.service';
 import { ValidatorService } from './services/validator.service';
+// import { CategoriesModule } from '../modules/categories/categories.module';
 
 const providers = [
     ConfigService,
@@ -31,6 +34,8 @@ const providers = [
             }),
             inject: [ConfigService],
         }),
+        CategoriesModule,
+        PostsModule,
     ],
     exports: [...providers, HttpModule, JwtModule],
 })

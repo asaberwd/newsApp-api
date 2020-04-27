@@ -25,6 +25,10 @@ export class CategoriesService {
         return this._categoryRepository.getCategory(id);
     }
 
+    getCategoryByName(categoryName: string): Promise<CategoryEntity> {
+        return this._categoryRepository.getCategoryByName(categoryName);
+    }
+
     deleteCategory(id: number): Promise<void> {
         return this._categoryRepository.deleteCategory(id);
     }

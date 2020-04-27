@@ -9,7 +9,7 @@ import { AuthModule } from './modules/auth/auth.module';
 import { CategoriesModule } from './modules/categories/categories.module';
 import { MathModule } from './modules/math/math.module';
 // import { PostsModule } from './modules/posts/posts.module';
-// import { SourcesModule } from './modules/sources/sources.module';
+import { SourcesModule } from './modules/sources/sources.module';
 import { TagsModule } from './modules/tags/tags.module';
 import { UserModule } from './modules/user/user.module';
 import { ConfigService } from './shared/services/config.service';
@@ -30,6 +30,7 @@ import { SharedModule } from './shared/shared.module';
         // TypeOrmModule.forRoot(),
         TagsModule,
         CategoriesModule,
+        SourcesModule,
         ScheduleModule.forRoot(),
     ],
 })
