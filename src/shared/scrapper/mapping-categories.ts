@@ -1,4 +1,13 @@
-const okazMapper = {};
+const okazMapper = {
+    news: '',
+    sports: '',
+    economy: '',
+    fashion: '',
+    tourism: '',
+    technology: '',
+    variety: '',
+    Games: '',
+};
 
 okazMapper.news = 'local';
 okazMapper.sports = 'sports';
