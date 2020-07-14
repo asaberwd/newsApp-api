@@ -7,17 +7,19 @@ const okazMapper = {
     technology: '',
     variety: '',
     Games: '',
+    investigation: '',
 };
 
-okazMapper.news = 'local';
-okazMapper.sports = 'sports';
-okazMapper.economy = 'economy';
+okazMapper.news = 'local'; // e
+okazMapper.sports = 'sports'; // e
+okazMapper.economy = 'economy'; // e
 okazMapper.fashion = 'fashion';
-okazMapper.tourism = 'tourism';
+okazMapper.tourism = 'tourism'; // e
 okazMapper['people-situations'] = 'local';
 okazMapper.technology = 'technology';
-okazMapper.variety = 'misc';
+okazMapper.variety = 'misc'; // e
 okazMapper.Games = 'Games';
-okazMapper['special-zones'] = 'society';
+okazMapper.investigation = 'local';
+okazMapper['special-zones'] = 'society'; // e
 
 export const okaz = okazMapper;

@@ -45,7 +45,9 @@ export class OkazScrapper {
                     url !== 'https://www.okaz.com.sa/media/latest' &&
                     url !== 'https://www.okaz.com.sa/articles' &&
                     url !== 'https://www.okaz.com.sa/digital' &&
-                    url !== 'https://www.okaz.com.sa/culture'
+                    url !== 'https://www.okaz.com.sa/culture' &&
+                    url !== 'https://www.okaz.com.sa/special-zones' &&
+                    url !== 'https://www.okaz.com.sa/citizen-voice'
                 ) {
                     categories.push({
                         url,
